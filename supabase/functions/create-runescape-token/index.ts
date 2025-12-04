@@ -156,7 +156,7 @@ serve(async (req) => {
           mint_address: actualMintAddress,
           image_url: imageFromMetadata,
           description: description,
-          lets_bonk_url: pumpFunUrl, // reuse column for pump link
+          lets_bonk_url: pumpFunUrl,
           transaction_hash: signature,
           market_cap: 4200
         });
