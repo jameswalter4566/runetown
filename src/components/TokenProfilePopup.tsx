@@ -210,7 +210,7 @@ const TokenProfilePopup: React.FC<TokenProfilePopupProps> = ({
               </div>
               <div className="mt-2">
                 <a
-                  href={`https://letsbonk.fun/token/${mintAddress}`}
+                  href={`https://pump.fun/coin/${mintAddress}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm font-bold"

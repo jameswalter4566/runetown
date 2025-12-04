@@ -127,7 +127,7 @@ export const RealtimeTokenFeed: React.FC = () => {
           tokens.map((token) => (
             <a
               key={token.id}
-              href={`https://letsbonk.fun/token/${token.mint_address}`}
+              href={`https://pump.fun/coin/${token.mint_address}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 rounded-xl p-3 transition-all transform hover:scale-105 hover:shadow-lg border-2 border-blue-300"

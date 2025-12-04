@@ -11,7 +11,7 @@ interface TokenLaunch {
   token_address: string;
   image_url?: string;
   market_cap: number;
-  lets_bonk_url: string;
+  lets_bonk_url?: string;
   created_at: string;
 }
 
@@ -156,7 +156,7 @@ export function TokenLaunchesFeed() {
                   </div>
                 </div>
                 <a 
-                  href={launch.lets_bonk_url} 
+                  href={launch.lets_bonk_url || `https://pump.fun/coin/${launch.token_address}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="launch-link"

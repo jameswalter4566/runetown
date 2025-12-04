@@ -23,7 +23,7 @@ const TokenInfoButton: React.FC<TokenInfoButtonProps> = ({ className }) => {
           setTokenInfo({
             mintAddress: characterData.mintAddress,
             marketCap: characterData.marketCap || 4200,
-            letsBonkUrl: characterData.letsBonkUrl || (characterData.mintAddress ? `https://letsbonk.fun/token/${characterData.mintAddress}` : undefined),
+            letsBonkUrl: characterData.letsBonkUrl || (characterData.mintAddress ? `https://pump.fun/coin/${characterData.mintAddress}` : undefined),
             username: characterData.username
           });
         }

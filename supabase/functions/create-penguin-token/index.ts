@@ -1,8 +1,8 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.3';
-import { Keypair } from 'https://esm.sh/@solana/web3.js@1.87.6';
-import { encode as base58Encode } from "https://deno.land/std@0.168.0/encoding/base58.ts";
+import { Keypair, VersionedTransaction, Connection } from 'https://esm.sh/@solana/web3.js@1.98.2';
+import bs58 from "https://esm.sh/bs58@6.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -35,132 +35,85 @@ serve(async (req) => {
 
     // Generate a random keypair for the mint
     const mintKeypair = Keypair.generate();
-    
-    // Encode the secret key to base58 for the API
-    const mintSecretKey = base58Encode(mintKeypair.secretKey);
-    const mintPublicKey = mintKeypair.publicKey.toString();
+    const mintPublicKey = mintKeypair.publicKey.toBase58();
     
     console.log('Generated unique token mint address:', mintPublicKey);
 
-    // Upload penguin image to IPFS
-    console.log('Uploading penguin image to IPFS...');
+    // Upload penguin image to Pump.fun IPFS
+    console.log('Uploading penguin image to Pump.fun IPFS...');
     const formData = new FormData();
     const blob = new Blob([Uint8Array.from(atob(imageBase64), c => c.charCodeAt(0))], { type: 'image/png' });
-    formData.append("image", blob, "token.png"); // Changed from penguin.png to token.png to match example
+    formData.append("file", blob, "token.png");
+    formData.append("name", name);
+    formData.append("symbol", symbol);
+    formData.append("description", description);
+    formData.append("twitter", "https://x.com/clubpenguin_fun");
+    formData.append("telegram", "");
+    formData.append("website", "https://clubpenguin.fun/");
+    formData.append("showName", "true");
 
-    const imgResponse = await fetch("https://nft-storage.letsbonk22.workers.dev/upload/img", {
+    const metadataResponse = await fetch("https://pump.fun/api/ipfs", {
       method: "POST",
       body: formData,
-    });
-    
-    if (!imgResponse.ok) {
-      const errorText = await imgResponse.text();
-      console.error('Image upload failed:', imgResponse.status, errorText);
-      throw new Error(`Image upload failed: ${imgResponse.statusText} - ${errorText}`);
-    }
-    
-    const imgUri = await imgResponse.text();
-    console.log('Image URI:', imgUri);
-
-    // Upload metadata with image URI
-    console.log('Creating metadata with image URI...');
-    const metadataResponse = await fetch("https://nft-storage.letsbonk22.workers.dev/upload/meta", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        createdOn: "https://bonk.fun",
-        description: description,
-        image: imgUri,
-        name: name,
-        symbol: symbol,
-        website: "https://clubpenguin.fun/",
-        twitter: "https://x.com/clubpenguin_fun"
-      }),
     });
     
     if (!metadataResponse.ok) {
       const errorText = await metadataResponse.text();
       console.error('Metadata upload failed:', metadataResponse.status, errorText);
-      throw new Error(`Metadata upload failed: ${metadataResponse.statusText} - ${errorText}`);
+      throw new Error(`Pump.fun IPFS upload failed: ${metadataResponse.statusText} - ${errorText}`);
     }
     
-    let metadataUri = await metadataResponse.text();
-    console.log('Metadata URI:', metadataUri);
+    const metadataJson = await metadataResponse.json();
+    const metadataUri = metadataJson?.metadataUri || metadataJson?.metadata_uri;
+    const imageFromMetadata = metadataJson?.metadata?.image || metadataJson?.image || undefined;
 
-    // Get the create transaction
-    const pumpPortalAPIKey = Deno.env.get('PUMPPORTAL_API_KEY');
-    if (!pumpPortalAPIKey) {
-      throw new Error('PUMPPORTAL_API_KEY environment variable not set');
+    // Prepare signer
+    const solanaPrivateKey = Deno.env.get('solana_key') || Deno.env.get('SOLANA_KEY');
+    if (!solanaPrivateKey) {
+      throw new Error('solana_key env variable not set');
     }
-    console.log('PumpPortal API Key exists: true');
+    const signerKeyPair = Keypair.fromSecretKey(bs58.decode(solanaPrivateKey));
+    const publicKey = signerKeyPair.publicKey.toBase58();
     
-    const requestBody = {
-      action: "create",
-      tokenMetadata: {
-        name: name,
-        symbol: symbol,
-        uri: metadataUri,
-      },
-      mint: mintSecretKey,
-      denominatedInSol: "true",
-      amount: 0.01,
-      slippage: 5,
-      priorityFee: 0.00005,
-      pool: "bonk"
-    };
-    
-    console.log('PumpPortal request body:', JSON.stringify({
-      ...requestBody,
-      mint: "***SECRET_KEY_HIDDEN***" // Hide secret key in logs
-    }, null, 2));
-    
-    console.log('Creating token on pump.fun...');
-    
+    console.log('Using PumpPortal trade-local with signer:', publicKey);
+
     const response = await fetch(
-      `https://pumpportal.fun/api/trade?api-key=${pumpPortalAPIKey}`,
+      `https://pumpportal.fun/api/trade-local`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify({
+          publicKey: publicKey,
+          action: "create",
+          tokenMetadata: {
+            name: name,
+            symbol: symbol,
+            uri: metadataUri,
+          },
+          mint: mintKeypair.publicKey.toBase58(),
+          denominatedInSol: "true",
+          amount: 0.001,
+          slippage: 10,
+          priorityFee: 0.00001,
+          pool: "pump",
+        }),
       }
     );
 
     console.log('PumpPortal response status:', response.status);
-    console.log('PumpPortal response headers:', Object.fromEntries(response.headers.entries()));
     
-    const responseText = await response.text();
-    console.log('PumpPortal raw response:', responseText);
-
     if (response.status === 200) {
-      let data;
-      try {
-        data = JSON.parse(responseText);
-        console.log('PumpPortal parsed response:', JSON.stringify(data, null, 2));
-      } catch (error) {
-        console.error('Failed to parse PumpPortal response as JSON:', error);
-        throw new Error('Invalid JSON response from PumpPortal API');
-      }
-      
-      // Check if there are errors in the response
-      if (data.errors && data.errors.length > 0) {
-        console.error('PumpPortal API returned errors:', data.errors);
-        throw new Error(`PumpPortal API error: ${data.errors.join(', ')}`);
-      }
-      
-      // Extract the actual mint address
-      let actualMintAddress = mintPublicKey;
-      if (data.mint) {
-        actualMintAddress = data.mint;
-      } else if (data.tokenAddress) {
-        actualMintAddress = data.tokenAddress;
-      }
-      
-      console.log("Transaction signature from API:", data.signature);
-      console.log("Transaction: https://solscan.io/tx/" + data.signature);
+      const data = await response.arrayBuffer();
+      const tx = VersionedTransaction.deserialize(new Uint8Array(data));
+      tx.sign([mintKeypair, signerKeyPair]);
+
+      const connection = new Connection('https://api.mainnet-beta.solana.com/', 'confirmed');
+      const signature = await connection.sendTransaction(tx);
+      const actualMintAddress = mintKeypair.publicKey.toBase58();
+
+      console.log("Transaction: https://solscan.io/tx/" + signature);
       console.log("Token mint address:", actualMintAddress);
       
       // Update user record with the actual token mint address
@@ -216,8 +169,8 @@ serve(async (req) => {
       return new Response(JSON.stringify({
         success: true,
         mintAddress: actualMintAddress,
-        transactionSignature: data.signature,
-        solscanUrl: `https://solscan.io/tx/${data.signature}`,
+        transactionSignature: signature,
+        solscanUrl: `https://solscan.io/tx/${signature}`,
         pumpFunUrl: `https://pump.fun/coin/${actualMintAddress}`
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
