@@ -59,7 +59,7 @@ serve(async (req) => {
     metadataForm.append("description", description);
     metadataForm.append("twitter", "https://x.com/runescapewtf");
     metadataForm.append("telegram", "");
-    metadataForm.append("website", "http://runesol.fun/");
+    metadataForm.append("website", "http://runescape.wtf/");
     metadataForm.append("showName", "true");
 
     const metadataResponse = await fetch("https://pump.fun/api/ipfs", {
