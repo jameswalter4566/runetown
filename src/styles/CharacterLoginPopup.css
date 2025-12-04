@@ -1,0 +1,158 @@
+/* Character Login Popup - RuneScape Style */
+.character-login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.character-login-popup {
+  width: 400px;
+  background-color: #494437;
+  border: 4px solid #000;
+  border-radius: 8px;
+  font-family: 'RuneScape', Arial, sans-serif;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.login-popup-header {
+  background-color: #7a6e5d;
+  border-bottom: 2px solid #000;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-popup-header h2 {
+  color: #ff9800;
+  font-size: 18px;
+  margin: 0;
+  text-shadow: 2px 2px 2px #000;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #ff9800;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 2px 2px 2px #000;
+}
+
+.close-button:hover {
+  color: #ffb84d;
+}
+
+.login-popup-content {
+  padding: 24px;
+}
+
+.login-input-section {
+  margin-bottom: 20px;
+}
+
+.login-input-section label {
+  display: block;
+  color: #ff9800;
+  font-size: 14px;
+  margin-bottom: 8px;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.character-name-input {
+  width: 100%;
+  background-color: #5a5246;
+  border: 2px solid #000;
+  color: #ff9800;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 0;
+  font-family: 'RuneScape', Arial, sans-serif;
+}
+
+.character-name-input::placeholder {
+  color: #8b7355;
+}
+
+.character-name-input:focus {
+  outline: none;
+  border-color: #ff9800;
+  box-shadow: 0 0 0 1px #ff9800;
+}
+
+.login-button-section {
+  margin-bottom: 16px;
+}
+
+.login-confirm-button {
+  width: 100%;
+  background-color: #7a6e5d;
+  border: 2px solid #000;
+  color: #ff9800;
+  padding: 10px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 0;
+  font-family: 'RuneScape', Arial, sans-serif;
+  transition: background-color 0.2s;
+}
+
+.login-confirm-button:hover:not(:disabled) {
+  background-color: #8a7e6d;
+}
+
+.login-confirm-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-help-text {
+  text-align: center;
+  color: #ff9800;
+  font-size: 12px;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.login-help-text a {
+  color: #ffb84d;
+  text-decoration: underline;
+}
+
+.login-help-text a:hover {
+  color: #ffc966;
+}

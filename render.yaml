@@ -1,0 +1,27 @@
+services:
+  # WebSocket Server
+  - type: web
+    name: runetown-server
+    runtime: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    healthCheckPath: /health
+    
+  # Frontend Static Site (if needed)
+  # - type: web
+  #   name: runetown-frontend
+  #   runtime: static
+  #   buildCommand: npm install && npm run build
+  #   staticPublishPath: ./dist
+  #   headers:
+  #     - path: /*
+  #       name: X-Frame-Options
+  #       value: DENY
+  #   envVars:
+  #     - key: VITE_SOCKET_SERVER_URL
+  #       value: https://runetown-server.onrender.com

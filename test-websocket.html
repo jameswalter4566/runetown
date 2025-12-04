@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Connection Test</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>WebSocket Connection Test</h1>
+    <div id="status">Connecting...</div>
+    <div id="log"></div>
+    
+    <script>
+        const serverUrl = 'https://runetown-server.onrender.com';
+        const log = document.getElementById('log');
+        const status = document.getElementById('status');
+        
+        function addLog(message, type = 'info') {
+            const div = document.createElement('div');
+            div.style.color = type === 'error' ? 'red' : type === 'success' ? 'green' : 'black';
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(div);
+            console.log(message);
+        }
+        
+        addLog(`Attempting to connect to ${serverUrl}`);
+        
+        const socket = io(serverUrl, {
+            transports: ['websocket', 'polling'],
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000
+        });
+        
+        socket.on('connect', () => {
+            status.textContent = 'Connected!';
+            status.style.color = 'green';
+            addLog('Successfully connected to server!', 'success');
+            addLog(`Socket ID: ${socket.id}`, 'success');
+            addLog(`Transport: ${socket.io.engine.transport.name}`, 'success');
+            
+            // Try joining a room
+            socket.emit('join-room', {
+                roomName: 'game-map:test',
+                player: {
+                    id: 'test-player-' + Date.now(),
+                    username: 'TestUser',
+                    modelFile: 'blue_blue_white.glb',
+                    position: { x: 0, y: 0, z: 0 },
+                    velocity: { x: 0, y: 0, z: 0 },
+                    direction: 0,
+                    isMoving: false,
+                    isWaddling: false,
+                    waddlePhase: 0
+                }
+            });
+        });
+        
+        socket.on('connect_error', (error) => {
+            status.textContent = 'Connection Error!';
+            status.style.color = 'red';
+            addLog(`Connection error: ${error.message}`, 'error');
+            addLog(`Error type: ${error.type}`, 'error');
+        });
+        
+        socket.on('disconnect', (reason) => {
+            status.textContent = 'Disconnected!';
+            status.style.color = 'orange';
+            addLog(`Disconnected: ${reason}`, 'error');
+        });
+        
+        socket.on('current-players', (players) => {
+            addLog(`Received current players: ${players.length} players`, 'success');
+        });
+        
+        socket.on('player-joined', (player) => {
+            addLog(`Player joined: ${player.username}`, 'success');
+        });
+        
+        // Test health endpoint
+        fetch(`${serverUrl}/health`)
+            .then(res => res.json())
+            .then(data => {
+                addLog(`Health check: ${JSON.stringify(data)}`, 'success');
+            })
+            .catch(err => {
+                addLog(`Health check failed: ${err.message}`, 'error');
+            });
+    </script>
+</body>
+</html>

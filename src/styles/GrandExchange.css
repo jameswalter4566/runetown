@@ -1,0 +1,578 @@
+/* Grand Exchange Popup Styles */
+.grand-exchange-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; /* Increased to ensure it's above notifications */
+}
+
+.grand-exchange-container {
+  width: 800px;
+  height: 700px;
+  background-color: #494437;
+  border: 3px solid #000;
+  display: flex;
+  flex-direction: column;
+  font-family: 'RuneScape', Arial, sans-serif;
+  position: relative;
+  z-index: 2001; /* Ensure container is also above notifications */
+}
+
+/* Header */
+.ge-header {
+  background: linear-gradient(to bottom, #5a5042 0%, #494437 100%);
+  border-bottom: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  position: relative;
+}
+
+.ge-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ge-tab {
+  color: #ff9800;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px #000;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.ge-tab:hover {
+  background: rgba(255, 152, 0, 0.2);
+}
+
+.ge-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ff9800;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #000;
+  letter-spacing: 0.5px;
+}
+
+.ge-close {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #ff9800;
+  border-radius: 4px;
+  color: #ff9800;
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.ge-close:hover {
+  background: rgba(255, 152, 0, 0.3);
+  color: #ffcc00;
+  border-color: #ffcc00;
+  transform: scale(1.05);
+}
+
+/* Instructions */
+.ge-instructions {
+  color: #ffcc00;
+  text-align: center;
+  padding: 12px;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px #000;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 8px;
+  border: 1px solid #333;
+}
+
+/* Controls Section */
+.ge-controls {
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid #000;
+}
+
+.ge-mode-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.ge-mode-button {
+  background: linear-gradient(to bottom, #5a5042 0%, #494437 100%);
+  border: 2px solid #000;
+  color: #ff9800;
+  padding: 8px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.ge-mode-button:hover {
+  background: linear-gradient(to bottom, #6a5d4f 0%, #5a5042 100%);
+}
+
+.ge-mode-button.active {
+  background: linear-gradient(to bottom, #7a6d5f 0%, #6a5d4f 100%);
+  color: #ffcc00;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+.ge-sort-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.ge-filter-label {
+  color: #ff9800;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.ge-filter-select {
+  background: #3a332a;
+  border: 2px solid #000;
+  color: #ffcc00;
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Slots Container */
+.ge-slots-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(240px, auto);
+  gap: 12px;
+  padding: 12px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100% - 200px);
+}
+
+/* Individual Slot */
+.ge-slot {
+  background: #3a332a;
+  border: 2px solid #000;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  padding-bottom: 40px; /* Space for buy button */
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 240px;
+  overflow: visible; /* Allow content to be visible */
+}
+
+.ge-slot:hover {
+  background: #4a433a;
+  border-color: #ff9800;
+}
+
+.ge-slot.selected {
+  border-color: #ffcc00;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+
+.ge-slot-header {
+  color: #ff9800;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #000;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ge-like-button {
+  background: none;
+  border: none;
+  color: #ff9800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 2px 4px;
+  transition: all 0.2s ease;
+}
+
+.ge-like-button:hover {
+  color: #ffcc00;
+  transform: scale(1.1);
+}
+
+/* Empty Slot */
+.ge-empty-slot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ge-empty-icon {
+  font-size: 32px;
+  color: #666;
+  opacity: 0.5;
+}
+
+/* Filled Slot */
+.ge-slot-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  min-height: 40px;
+}
+
+.ge-token-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.ge-token-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #000;
+}
+
+.ge-token-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #666;
+  border-radius: 4px;
+  border: 1px solid #000;
+}
+
+.ge-token-info {
+  flex: 1;
+  min-width: 0; /* Prevent overflow */
+  overflow: hidden;
+}
+
+.ge-token-name {
+  color: #ffcc00;
+  font-size: 13px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ge-token-symbol {
+  color: #ff9800;
+  font-size: 12px;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.ge-token-ca {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: 10px;
+  color: #888;
+}
+
+.ge-copy-button {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.ge-copy-button:hover {
+  color: #ffcc00;
+}
+
+/* Stats */
+.ge-slot-stats {
+  font-size: 11px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.ge-stat {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.ge-stat-label {
+  color: #999;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.ge-stat-value {
+  color: #ffcc00;
+  text-shadow: 1px 1px 1px #000;
+}
+
+/* SOL Amount Section */
+.ge-amount-section {
+  margin-top: auto;
+  margin-bottom: 36px; /* More space before buy button */
+  position: relative;
+  z-index: 1;
+}
+
+.ge-sol-input {
+  width: 100%;
+  background: #2a2a2a;
+  border: 1px solid #000;
+  color: #ffcc00;
+  padding: 4px 8px;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 4px;
+  font-family: 'RuneScape', Arial, sans-serif;
+  position: relative;
+  z-index: 1;
+}
+
+.ge-sol-input::placeholder {
+  color: #8b7355;
+}
+
+.ge-quick-amounts {
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.ge-quick-button {
+  flex: 1;
+  background: #4a433a;
+  border: 1px solid #000;
+  color: #ff9800;
+  padding: 2px 4px;
+  font-size: 10px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
+  transition: all 0.2s ease;
+}
+
+.ge-quick-button:hover {
+  background: #5a5042;
+  color: #ffcc00;
+}
+
+/* Buy Button */
+.ge-buy-button {
+  background: linear-gradient(to bottom, #6a5d4f 0%, #5a5042 100%);
+  border: 2px solid #000;
+  color: #ffcc00;
+  padding: 6px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border-radius: 0;
+  width: calc(100% - 16px); /* Account for padding */
+  transition: all 0.2s ease;
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 2;
+}
+
+.ge-buy-button:hover {
+  background: linear-gradient(to bottom, #7a6d5f 0%, #6a5d4f 100%);
+  transform: scale(1.05);
+}
+
+.ge-buy-button:active {
+  transform: scale(0.95);
+}
+
+/* Price change colors */
+.ge-stat-value.positive {
+  color: #4caf50;
+}
+
+.ge-stat-value.negative {
+  color: #f44336;
+}
+
+/* Sell Mode Styles */
+.ge-sell-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ge-search-section {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+.ge-search-section h3 {
+  color: #ff9800;
+  text-shadow: 1px 1px 1px #000;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.ge-search-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.ge-search-input {
+  flex: 1;
+  background: #3a332a;
+  border: 2px solid #000;
+  color: #ffcc00;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: 'RuneScape', Arial, sans-serif;
+}
+
+.ge-search-input::placeholder {
+  color: #8b7355;
+}
+
+.ge-search-button {
+  background: linear-gradient(to bottom, #6a5d4f 0%, #5a5042 100%);
+  border: 2px solid #000;
+  color: #ffcc00;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.ge-search-button:hover:not(:disabled) {
+  background: linear-gradient(to bottom, #7a6d5f 0%, #6a5d4f 100%);
+}
+
+.ge-search-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Searched Token Display */
+.ge-searched-token {
+  width: 100%;
+  max-width: 500px;
+  background: #3a332a;
+  border: 2px solid #000;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.ge-searched-token h4 {
+  color: #ff9800;
+  text-shadow: 1px 1px 1px #000;
+  margin-bottom: 12px;
+}
+
+.ge-token-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ge-token-display-image {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #000;
+}
+
+.ge-token-display-info {
+  flex: 1;
+}
+
+.ge-token-display-info .ge-token-name {
+  color: #ffcc00;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.ge-token-display-info .ge-token-symbol {
+  color: #ff9800;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px #000;
+  margin-bottom: 8px;
+}
+
+.ge-token-stats-row {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #999;
+}
+
+.ge-token-stats-row span {
+  text-shadow: 1px 1px 1px #000;
+}
+
+.ge-list-button {
+  background: linear-gradient(to bottom, #6a5d4f 0%, #5a5042 100%);
+  border: 2px solid #000;
+  color: #ffcc00;
+  padding: 8px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.ge-list-button:hover {
+  background: linear-gradient(to bottom, #7a6d5f 0%, #6a5d4f 100%);
+  transform: scale(1.05);
+}
+
+/* Loading */
+.ge-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #ff9800;
+  font-size: 16px;
+  padding: 40px;
+  text-shadow: 1px 1px 1px #000;
+}

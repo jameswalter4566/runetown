@@ -1,0 +1,238 @@
+/* Character Creator - RuneScape Style */
+.character-creator-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.character-creator {
+  width: 480px;
+  height: 420px;
+  background-color: #494437;
+  border: 3px solid #000;
+  display: flex;
+  flex-direction: column;
+  font-family: 'RuneScape', Arial, sans-serif;
+  position: relative;
+}
+
+/* Header */
+.creator-header {
+  background: linear-gradient(to bottom, #5a5042 0%, #494437 100%);
+  border-bottom: 2px solid #000;
+  text-align: center;
+  padding: 6px;
+}
+
+.creator-header h1 {
+  color: #ff9800;
+  font-size: 16px;
+  margin: 0;
+  margin-bottom: 12px;
+  text-shadow: 1px 1px 1px #000;
+  letter-spacing: 0.5px;
+}
+
+/* Username section in header */
+.username-section-header {
+  padding: 0 20px 8px 20px;
+}
+
+.username-label {
+  display: block;
+  color: #ff9800;
+  font-size: 14px;
+  margin-bottom: 6px;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.username-input-wrapper-header {
+  position: relative;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.username-input-header {
+  width: 100%;
+  background-color: #5a5246;
+  border: 2px solid #000;
+  color: #ff9800;
+  padding: 6px 8px;
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.username-input-header::placeholder {
+  color: #8b7355;
+}
+
+/* Main Content */
+.creator-content {
+  display: flex;
+  flex: 1;
+  background-color: #494437;
+}
+
+/* Left Section - Character Preview */
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  border-right: 2px solid #000;
+}
+
+/* Remove old username section from left panel */
+
+.character-preview {
+  flex: 1;
+  background-color: #3a332a;
+  border: 2px solid #000;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Keep pointer events disabled for the canvas inside */
+.character-preview canvas {
+  pointer-events: none;
+}
+
+.confirm-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  padding: 12px 8px;
+  border-top: 2px solid #000;
+}
+
+.confirm-button {
+  background: linear-gradient(to bottom, #6a5d4f 0%, #5a5042 100%);
+  border: 2px solid #000;
+  color: #ffcc00;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  border-radius: 0;
+  width: 100%;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: linear-gradient(to bottom, #7a6d5f 0%, #6a5d4f 100%);
+}
+
+.confirm-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.username-status {
+  font-size: 11px;
+  text-shadow: 1px 1px 1px #000;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.username-status.checking {
+  color: #ffeb3b;
+}
+
+.username-status.available {
+  color: #4caf50;
+}
+
+.username-status.taken {
+  color: #f44336;
+}
+
+/* Right Section - Color Options */
+.right-section {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  background-color: #494437;
+}
+
+.tab-header {
+  background: linear-gradient(to bottom, #5a5042 0%, #494437 100%);
+  color: #ff9800;
+  padding: 6px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 2px solid #000;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.color-options {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 4px;
+  gap: 6px;
+}
+
+.color-option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  min-height: 28px;
+}
+
+.arrow-button {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(to bottom, #6a5d4f 0%, #5a5042 100%);
+  border: 2px solid #000;
+  color: #ffcc00;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1px 1px 1px #000;
+  font-weight: bold;
+  padding: 0;
+  line-height: 1;
+}
+
+.arrow-button:hover {
+  background: linear-gradient(to bottom, #7a6d5f 0%, #6a5d4f 100%);
+}
+
+.arrow-button:active {
+  background: linear-gradient(to bottom, #5a5042 0%, #4a4032 100%);
+}
+
+.option-label {
+  color: #ff9800;
+  font-size: 13px;
+  text-shadow: 1px 1px 1px #000;
+  flex: 1;
+  text-align: center;
+  margin: 0 8px;
+}
+
+/* Remove any scrollbars */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}

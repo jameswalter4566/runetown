@@ -1,0 +1,48 @@
+/* Background Image Optimization Styles */
+
+/* Base styles for high-quality image rendering */
+.optimized-background {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated; /* Fallback for older browsers */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Force GPU acceleration and smooth rendering */
+.gpu-accelerated {
+  will-change: transform;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* Enhanced image quality for retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .optimized-background {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimizeQuality;
+  }
+}
+
+/* Specific optimizations for 16:9 aspect ratio */
+@media (aspect-ratio: 16/9) {
+  .optimized-background {
+    background-size: 100% 100% !important;
+  }
+}
+
+/* Prevent blur on scale transforms */
+.no-blur-scale {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0);
+  transform: translateZ(0) scale(1.0, 1.0);
+}
+
+/* High quality filtering for backgrounds */
+.hq-filter {
+  filter: contrast(1.02) saturate(1.05);
+  -webkit-filter: contrast(1.02) saturate(1.05);
+}

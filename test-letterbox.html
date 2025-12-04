@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letterbox Layout Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #4BA6FF;
+            font-family: 'Silkscreen', monospace;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 64px);
+        }
+
+        .game-viewport {
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16 / 9;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+        }
+
+        @media (max-aspect-ratio: 16/9) {
+            .game-viewport {
+                width: calc(100vw - 40px);
+                height: auto;
+            }
+        }
+
+        @media (min-aspect-ratio: 16/9) {
+            .game-viewport {
+                height: calc(100vh - 124px);
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-links">
+            <a href="#">What's New?</a>
+            <a href="#">Safety</a>
+            <a href="#">Parents</a>
+            <a href="#">Community Rules</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="nav-links">
+            <a href="#">Language Select ▼</a>
+            <a href="#">Log Out</a>
+        </div>
+    </header>
+    <main>
+        <div class="game-viewport">
+            Game Content Goes Here (16:9 Aspect Ratio)
+        </div>
+    </main>
+</body>
+</html>

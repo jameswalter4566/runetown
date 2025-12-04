@@ -1,0 +1,57 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sky background -->
+  <rect width="1200" height="800" fill="#87CEEB"/>
+  
+  <!-- Snow ground -->
+  <ellipse cx="600" cy="700" rx="800" ry="300" fill="#F0F8FF"/>
+  
+  <!-- Mountains in background -->
+  <polygon points="0,400 200,200 400,400" fill="#B0C4DE" opacity="0.7"/>
+  <polygon points="300,400 500,250 700,400" fill="#9FB6CD" opacity="0.7"/>
+  <polygon points="600,400 800,180 1000,400" fill="#B0C4DE" opacity="0.7"/>
+  <polygon points="900,400 1100,220 1200,400" fill="#9FB6CD" opacity="0.7"/>
+  
+  <!-- Igloo -->
+  <g transform="translate(200, 500) scale(0.6)">
+    <!-- Igloo dome -->
+    <path d="M 0 50 Q 0 0 50 0 Q 100 0 100 50 Z" fill="#E0F2FE" stroke="#94A3B8" stroke-width="2"/>
+    <!-- Igloo entrance -->
+    <rect x="35" y="30" width="30" height="20" fill="#1E293B" rx="15"/>
+    <!-- Igloo blocks pattern -->
+    <line x1="0" y1="25" x2="100" y2="25" stroke="#94A3B8" stroke-width="1"/>
+    <line x1="25" y1="0" x2="25" y2="50" stroke="#94A3B8" stroke-width="1"/>
+    <line x1="50" y1="0" x2="50" y2="50" stroke="#94A3B8" stroke-width="1"/>
+    <line x1="75" y1="0" x2="75" y2="50" stroke="#94A3B8" stroke-width="1"/>
+  </g>
+  
+  <!-- Trees -->
+  <g transform="translate(800, 450)">
+    <!-- Tree trunk -->
+    <rect x="45" y="80" width="10" height="20" fill="#8B4513"/>
+    <!-- Tree top -->
+    <polygon points="50,0 20,40 80,40" fill="#228B22"/>
+    <polygon points="50,20 25,50 75,50" fill="#228B22"/>
+    <polygon points="50,40 30,70 70,70" fill="#228B22"/>
+  </g>
+  
+  <g transform="translate(900, 480)">
+    <!-- Tree trunk -->
+    <rect x="45" y="80" width="10" height="20" fill="#8B4513"/>
+    <!-- Tree top -->
+    <polygon points="50,0 20,40 80,40" fill="#228B22"/>
+    <polygon points="50,20 25,50 75,50" fill="#228B22"/>
+    <polygon points="50,40 30,70 70,70" fill="#228B22"/>
+  </g>
+  
+  <!-- Ice rink/pond -->
+  <ellipse cx="600" cy="600" rx="150" ry="80" fill="#B0E0E6" stroke="#5DADE2" stroke-width="2"/>
+  
+  <!-- Snow pile -->
+  <circle cx="400" cy="580" r="40" fill="#FFFFFF"/>
+  <circle cx="420" cy="570" r="35" fill="#FFFFFF"/>
+  <circle cx="380" cy="570" r="30" fill="#FFFFFF"/>
+  
+  <!-- Path -->
+  <path d="M 100 700 Q 300 650 600 650 Q 900 650 1100 700" 
+        fill="none" stroke="#D1D5DB" stroke-width="40" stroke-linecap="round"/>
+</svg>
