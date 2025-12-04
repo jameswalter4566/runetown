@@ -90,7 +90,7 @@ const PlayNowPopup = ({ onClose, onLogin, onCreatePenguin }: PlayNowPopupProps) 
           zIndex: 10
         }}>
           <a 
-            href="https://x.com/runesoldotfun" 
+            href="https://x.com/runescapewtf" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
@@ -124,7 +124,7 @@ const PlayNowPopup = ({ onClose, onLogin, onCreatePenguin }: PlayNowPopupProps) 
             }}
           >
             <span style={{ fontSize: "20px" }}>🐦</span>
-            Follow @runesoldotfun
+            Follow @runescapewtf
           </a>
         </div>
         

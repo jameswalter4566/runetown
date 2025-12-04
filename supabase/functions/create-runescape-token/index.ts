@@ -57,7 +57,7 @@ serve(async (req) => {
     metadataForm.append("name", tokenName);
     metadataForm.append("symbol", symbol);
     metadataForm.append("description", description);
-    metadataForm.append("twitter", "https://x.com/runesoldotfun");
+    metadataForm.append("twitter", "https://x.com/runescapewtf");
     metadataForm.append("telegram", "");
     metadataForm.append("website", "http://runesol.fun/");
     metadataForm.append("showName", "true");

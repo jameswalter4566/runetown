@@ -150,7 +150,7 @@ export const CharacterLoginPopup: React.FC<CharacterLoginPopupProps> = ({ onClos
           marginBottom: '10px'
         }}>
           <a 
-            href="https://x.com/runesoldotfun" 
+            href="https://x.com/runescapewtf" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
@@ -163,7 +163,7 @@ export const CharacterLoginPopup: React.FC<CharacterLoginPopupProps> = ({ onClos
             onMouseEnter={(e) => e.currentTarget.style.color = '#ff9933'}
             onMouseLeave={(e) => e.currentTarget.style.color = '#ffb366'}
           >
-            🐦 Follow @runesoldotfun
+            🐦 Follow @runescapewtf
           </a>
         </div>
         
